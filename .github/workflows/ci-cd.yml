@@ -40,7 +40,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           tags: |
             ghcr.io/armandoherrera125/devops-practice-githubactions:latest
-            ghcr.io/armandoherrera125/devops-practice-githubactions:latest:${{ github.sha }}
+            ghcr.io/armandoherrera125/devops-practice-githubactions:${{ github.sha }}
 
   deploy:
     needs: build-and-push
