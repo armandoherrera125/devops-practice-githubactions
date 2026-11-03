@@ -57,8 +57,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy
         run: |
-          docker pull ghcr.io/armandoherrera125/devops-practice-githubactions:latest
-          docker rm -f app || true
-          docker run -d --name app --restart unless-stopped -p 8080:3000 ghcr.io/armandoherrera125/devops-practice-githubactions:latest
-          sleep 5
-          docker exec app wget -qO- http://localhost:3000/health
+          kubectl apply k8s-practice
+          kubectl set image deployment/app-k8s-deployment app-k8s-deployment=ghcr.io/armandoherrera125/devops-practice-githubactions:${{ github.sha }}
+          kubectl rollout status deployment/app-k8s-deployment --timeout=120s

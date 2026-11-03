@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-k8s-deployment
+spec:
+  selector:
+    matchLabels:
+      app: app-k8s-deployment
+  template:
+    metadata:
+      labels:
+        app: app-k8s-deployment
+    spec:
+      containers:
+      - name: app-k8s-deployment
+        image: app-k8s:1.0.1
+        resources:
+          requests:
+            memory: "32Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8080
+        envFrom:
+          - configMapRef:
+              name: app-k8s-configmap
