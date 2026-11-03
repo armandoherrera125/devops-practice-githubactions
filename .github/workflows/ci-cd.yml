@@ -57,6 +57,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Deploy
         run: |
+          sudo curl -LO https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl && \
+          sudo chmod +x ./kubectl && \
+          sudo mv ./kubectl /usr/local/bin/kubectl
           kubectl apply k8s-practice
           kubectl set image deployment/app-k8s-deployment app-k8s-deployment=ghcr.io/armandoherrera125/devops-practice-githubactions:${{ github.sha }}
           kubectl rollout status deployment/app-k8s-deployment --timeout=120s
